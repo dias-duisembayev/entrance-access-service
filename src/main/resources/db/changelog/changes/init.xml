@@ -1,0 +1,52 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<databaseChangeLog logicalFilePath="db.changelog-master.xml" xmlns="http://www.liquibase.org/xml/ns/dbchangelog"
+                   xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+                   xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-3.4.xsd">
+
+    <changeSet  id="1"  author="dias.duisembayev">
+        <createTable  tableName="e_organization">
+            <column  name="id"  type="bigint">
+                <constraints  primaryKey="true"  nullable="false"/>
+            </column>
+            <column  name="access_allowed"  type="boolean" defaultValue="false"/>
+        </createTable>
+
+        <createTable  tableName="e_employee">
+            <column  name="id"  type="varchar">
+                <constraints  primaryKey="true"  nullable="false"/>
+            </column>
+            <column  name="organization_id"  type="bigint">
+                <constraints nullable="false" foreignKeyName="fk_emp_org"
+                             referencedTableName="e_organization" referencedColumnNames="id"/>
+            </column>
+        </createTable>
+
+        <createTable  tableName="e_journal">
+            <column  name="id"  type="bigint">
+                <constraints  primaryKey="true"  nullable="false"/>
+            </column>
+            <column  name="employee_id"  type="varchar">
+                <constraints nullable="false" foreignKeyName="fk_journal_emp"
+                             referencedTableName="e_employee" referencedColumnNames="id"/>
+            </column>
+            <column name="action_type" type="varchar">
+                <constraints nullable="false"/>
+            </column>
+            <column name="success" type="boolean" defaultValue="false">
+                <constraints nullable="false"/>
+            </column>
+            <column name="access_time" type="date">
+                <constraints nullable="false"/>
+            </column>
+        </createTable>
+
+        <createSequence sequenceName="seq_org" startValue="1"/>
+        <createSequence sequenceName="seq_journal" startValue="1"/>
+    </changeSet>
+    
+    <changeSet id="2" author="dias.duisembayev">
+        <loadData file="/db/changelog/data/organization.csv" tableName="e_organization"/>
+        <loadData file="/db/changelog/data/employee.csv" tableName="e_employee"/>
+    </changeSet>
+
+</databaseChangeLog>
