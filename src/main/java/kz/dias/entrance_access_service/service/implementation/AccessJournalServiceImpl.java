@@ -35,7 +35,7 @@ public class AccessJournalServiceImpl implements AccessJournalService {
         journalEntry.setActionType(actionType);
         journalEntry.setSuccess(accessAllowed);
         accessJournalRepository.save(journalEntry);
-        return employee.getOrganization().isAccessAllowed();
+        return accessAllowed;
     }
 
     @Override
