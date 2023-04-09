@@ -4,6 +4,13 @@ spring:
       enabled: true
   datasource:
     url: jdbc:h2:mem:mydb
+  security:
+    oauth2:
+      client:
+        registration:
+          github:
+            client-id: ${client_id}
+            client-secret: ${client_secret}
   jpa:
     spring.jpa.database-platform: org.hibernate.dialect.H2Dialect
   liquibase:
